@@ -32,8 +32,10 @@ GLuint carregarTextura(const char* caminho) {
     glGenTextures(1, &texturaID);
     glBindTexture(GL_TEXTURE_2D, texturaID);
     
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // Repetição no eixo S
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT); // Repetição no eixo T
+
+    // Configura o filtro de textura (opcional, mas recomendado)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     
@@ -75,44 +77,88 @@ void desenharCubo() {
 
     // Face frontal
     glTexCoord2f(0.0, 0.0); glVertex3f(-0.5, -0.5,  0.5);
-    glTexCoord2f(1.0, 0.0); glVertex3f( 0.5, -0.5,  0.5);
-    glTexCoord2f(1.0, 1.0); glVertex3f( 0.5,  0.5,  0.5);
-    glTexCoord2f(0.0, 1.0); glVertex3f(-0.5,  0.5,  0.5);
+    glTexCoord2f(2.0, 0.0); glVertex3f( 0.5, -0.5,  0.5);
+    glTexCoord2f(2.0, 2.0); glVertex3f( 0.5,  0.5,  0.5);
+    glTexCoord2f(0.0, 2.0); glVertex3f(-0.5,  0.5,  0.5);
 
     // Face traseira
     glTexCoord2f(0.0, 0.0); glVertex3f(-0.5, -0.5, -0.5);
-    glTexCoord2f(1.0, 0.0); glVertex3f( 0.5, -0.5, -0.5);
-    glTexCoord2f(1.0, 1.0); glVertex3f( 0.5,  0.5, -0.5);
-    glTexCoord2f(0.0, 1.0); glVertex3f(-0.5,  0.5, -0.5);
+    glTexCoord2f(2.0, 0.0); glVertex3f( 0.5, -0.5, -0.5);
+    glTexCoord2f(2.0, 2.0); glVertex3f( 0.5,  0.5, -0.5);
+    glTexCoord2f(0.0, 2.0); glVertex3f(-0.5,  0.5, -0.5);
 
     // Face esquerda
     glTexCoord2f(0.0, 0.0); glVertex3f(-0.5, -0.5, -0.5);
-    glTexCoord2f(1.0, 0.0); glVertex3f(-0.5, -0.5,  0.5);
-    glTexCoord2f(1.0, 1.0); glVertex3f(-0.5,  0.5,  0.5);
-    glTexCoord2f(0.0, 1.0); glVertex3f(-0.5,  0.5, -0.5);
+    glTexCoord2f(2.0, 0.0); glVertex3f(-0.5, -0.5,  0.5);
+    glTexCoord2f(2.0, 2.0); glVertex3f(-0.5,  0.5,  0.5);
+    glTexCoord2f(0.0, 2.0); glVertex3f(-0.5,  0.5, -0.5);
 
     // Face direita
     glTexCoord2f(0.0, 0.0); glVertex3f( 0.5, -0.5, -0.5);
-    glTexCoord2f(1.0, 0.0); glVertex3f( 0.5, -0.5,  0.5);
-    glTexCoord2f(1.0, 1.0); glVertex3f( 0.5,  0.5,  0.5);
-    glTexCoord2f(0.0, 1.0); glVertex3f( 0.5,  0.5, -0.5);
+    glTexCoord2f(2.0, 0.0); glVertex3f( 0.5, -0.5,  0.5);
+    glTexCoord2f(2.0, 2.0); glVertex3f( 0.5,  0.5,  0.5);
+    glTexCoord2f(0.0, 2.0); glVertex3f( 0.5,  0.5, -0.5);
 
     // Face superior
     glTexCoord2f(0.0, 0.0); glVertex3f(-0.5,  0.5, -0.5);
-    glTexCoord2f(1.0, 0.0); glVertex3f( 0.5,  0.5, -0.5);
-    glTexCoord2f(1.0, 1.0); glVertex3f( 0.5,  0.5,  0.5);
-    glTexCoord2f(0.0, 1.0); glVertex3f(-0.5,  0.5,  0.5);
+    glTexCoord2f(2.0, 0.0); glVertex3f( 0.5,  0.5, -0.5);
+    glTexCoord2f(2.0, 2.0); glVertex3f( 0.5,  0.5,  0.5);
+    glTexCoord2f(0.0, 2.0); glVertex3f(-0.5,  0.5,  0.5);
 
     // Face inferior
     glTexCoord2f(0.0, 0.0); glVertex3f(-0.5, -0.5, -0.5);
-    glTexCoord2f(1.0, 0.0); glVertex3f( 0.5, -0.5, -0.5);
-    glTexCoord2f(1.0, 1.0); glVertex3f( 0.5, -0.5,  0.5);
-    glTexCoord2f(0.0, 1.0); glVertex3f(-0.5, -0.5,  0.5);
+    glTexCoord2f(2.0, 0.0); glVertex3f( 0.5, -0.5, -0.5);
+    glTexCoord2f(2.0, 2.0); glVertex3f( 0.5, -0.5,  0.5);
+    glTexCoord2f(0.0, 2.0); glVertex3f(-0.5, -0.5,  0.5);
 
     glEnd();
     glPopMatrix();
 }
+void desenharSolo() {
+    // Corpo do tanque
+    glPushMatrix(); 
 
+    glBegin(GL_QUADS);
+
+    // Face frontal
+    glTexCoord2f(0.0, 0.0); glVertex3f(-0.5, -0.5,  0.5);
+    glTexCoord2f(400.0, 0.0); glVertex3f( 0.5, -0.5,  0.5);
+    glTexCoord2f(400.0, 400.0); glVertex3f( 0.5,  0.5,  0.5);
+    glTexCoord2f(0.0, 400.0); glVertex3f(-0.5,  0.5,  0.5);
+
+    // Face traseira
+    glTexCoord2f(0.0, 0.0); glVertex3f(-0.5, -0.5, -0.5);
+    glTexCoord2f(400.0, 0.0); glVertex3f( 0.5, -0.5, -0.5);
+    glTexCoord2f(400.0, 400.0); glVertex3f( 0.5,  0.5, -0.5);
+    glTexCoord2f(0.0, 400.0); glVertex3f(-0.5,  0.5, -0.5);
+
+    // Face esquerda
+    glTexCoord2f(0.0, 0.0); glVertex3f(-0.5, -0.5, -0.5);
+    glTexCoord2f(400.0, 0.0); glVertex3f(-0.5, -0.5,  0.5);
+    glTexCoord2f(400.0, 400.0); glVertex3f(-0.5,  0.5,  0.5);
+    glTexCoord2f(0.0, 400.0); glVertex3f(-0.5,  0.5, -0.5);
+
+    // Face direita
+    glTexCoord2f(0.0, 0.0); glVertex3f( 0.5, -0.5, -0.5);
+    glTexCoord2f(400.0, 0.0); glVertex3f( 0.5, -0.5,  0.5);
+    glTexCoord2f(400.0, 400.0); glVertex3f( 0.5,  0.5,  0.5);
+    glTexCoord2f(0.0, 400.0); glVertex3f( 0.5,  0.5, -0.5);
+
+    // Face superior
+    glTexCoord2f(0.0, 0.0); glVertex3f(-0.5,  0.5, -0.5);
+    glTexCoord2f(400.0, 0.0); glVertex3f( 0.5,  0.5, -0.5);
+    glTexCoord2f(400.0, 400.0); glVertex3f( 0.5,  0.5,  0.5);
+    glTexCoord2f(0.0, 400.0); glVertex3f(-0.5,  0.5,  0.5);
+
+    // Face inferior
+    glTexCoord2f(0.0, 0.0); glVertex3f(-0.5, -0.5, -0.5);
+    glTexCoord2f(400.0, 0.0); glVertex3f( 0.5, -0.5, -0.5);
+    glTexCoord2f(400.0, 400.0); glVertex3f( 0.5, -0.5,  0.5);
+    glTexCoord2f(0.0, 400.0); glVertex3f(-0.5, -0.5,  0.5);
+
+    glEnd();
+    glPopMatrix();
+}
 void DesenharRoda() {
     GLUquadricObj* quadric;
 
@@ -282,14 +328,21 @@ void exibir() {
     // Atualize a posição da câmera para girar ao redor do tanque
     float cameraDistancia = 15.0; // Distância da câmera ao tanque
     // Calcular a posição da câmera com base nos ângulos AngTorreX e AngTorreY
-    GLfloat cameraX = posicaoTanqueX + cameraDistancia * std::cos(degreesToRadians(AngTorreY)) * std::cos(degreesToRadians(AngTorreX));
-    GLfloat cameraY = 10.0 + cameraDistancia * std::sin(degreesToRadians(AngTorreX));  // Ajustar altura da câmera
-    GLfloat cameraZ = posicaoTanqueZ + cameraDistancia * std::sin(degreesToRadians(AngTorreY)) * std::cos(degreesToRadians(AngTorreX))* std::sin(degreesToRadians(anguloTanque));
+    GLfloat anguloTotal = AngTorreY + anguloTanque;
+
+    GLfloat cameraX = posicaoTanqueX - cameraDistancia * std::sin(degreesToRadians(anguloTotal)) * std::cos(degreesToRadians(AngTorreX));
+    GLfloat cameraY = 2.0 + cameraDistancia * std::sin(degreesToRadians(AngTorreX));  // Ajuste a altura da câmera
+    GLfloat cameraZ = posicaoTanqueZ - cameraDistancia * std::cos(degreesToRadians(anguloTotal)) * std::cos(degreesToRadians(AngTorreX));
+
+    // A câmera olha na direção em que o canhão está apontando
+    GLfloat focoX = posicaoTanqueX + std::cos(degreesToRadians(AngTorreY)) * std::cos(degreesToRadians(AngTorreX));
+    GLfloat focoY = 2.0 + std::sin(degreesToRadians(AngTorreX));  // Ponto de foco no canhão
+    GLfloat focoZ = posicaoTanqueZ + std::sin(degreesToRadians(AngTorreY)) * std::cos(degreesToRadians(AngTorreX));
 
     // Definir a câmera usando gluLookAt
     gluLookAt(cameraX, cameraY, cameraZ,   // Posição da câmera
-            posicaoTanqueX, 0.0, posicaoTanqueZ,   // Ponto de foco no tanque
-            0.0, 1.0, 0.0);   // Vetor 'up' (cima)
+              focoX, focoY, focoZ,         // Ponto de foco
+              0.0, 1.0, 0.0);             // Vetor 'up' (cima)
                                    
 
     //Tanque
@@ -305,9 +358,9 @@ void exibir() {
     glPushMatrix();
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D,texturaGrama);
-    glTranslatef(0.0,-2.0,0.0);
-    glScalef(500.0,0.5,500.0);
-    desenharCubo();
+    glTranslatef(0.0,-2.5,0.0);
+    glScalef(5000.0,0.5,5000.0);
+    desenharSolo();
     glDisable(GL_TEXTURE_2D);
     glPopMatrix();
 
@@ -377,7 +430,7 @@ void teclasEspeciais(int tecla, int x, int y) {
     switch (tecla) {
         case GLUT_KEY_UP:
             AngTorreX -= velocidadeRotacao;
-            if (AngTorreX < -90.0) AngTorreX = -90.0;
+            if (AngTorreX < -15.0) AngTorreX = -15.0;
             break;
         case GLUT_KEY_DOWN:
             AngTorreX += velocidadeRotacao;
@@ -385,11 +438,11 @@ void teclasEspeciais(int tecla, int x, int y) {
             break;
         case GLUT_KEY_LEFT:
             AngTorreY += velocidadeRotacao;
-            if (AngTorreY > 90.0) AngTorreY = 90.0;
+            if (AngTorreY > 135.0) AngTorreY = 135.0;
             break;
         case GLUT_KEY_RIGHT:
             AngTorreY -= velocidadeRotacao;
-            if (AngTorreY < -90.0) AngTorreY = -90.0;
+            if (AngTorreY < -135.0) AngTorreY = -135.0;
             break;
     }
     glutPostRedisplay();
