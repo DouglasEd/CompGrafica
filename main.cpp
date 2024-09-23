@@ -5,12 +5,22 @@
 #include <stdio.h>
 
 float anguloTanque = 0.0;
-float AngTorreY = 0.0;
-float AngTorreX = 0.0; 
-float posicaoTanqueX = 0.0, posicaoTanqueZ = 0.0; 
-GLuint texturaTanque, texturaGrama, texturaArvore; 
-float anguloCameraX = 0.0;
-float anguloCameraY =0.0;
+float AngTorreY = 0.0,AngTorreX = 0.0;
+int altura[10][10] = {
+        {0, 0, 0, 0, 0, 3, 5, 5, 5, 5},
+        {0, 1, 0, 0, 0, 3, 5, 6, 6, 6},
+        {0, 0, 0, 0, 0, 3, 5, 6, 7, 6},
+        {0, 0, 0, 0, 0, 3, 5, 6, 6, 6},
+        {0, 0, 0, 0, 0, 0, 3, 5, 6, 5},
+        {0, 0, 0, 0, 0, 5, 3, 5, 6, 5},
+        {0, 0, 0, 2, 4, 0, 0, 3, 4, 3},
+        {0, 0, 0, 3, 0, 0, 0, 0, 3, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    };
+float posicaoTanqueX = 50.0,posicaoTanqueY = 2.5, posicaoTanqueZ = 50.0; 
+GLuint texturaTanque, texturaGrama; 
+float anguloCameraX = 0.0, anguloCameraY =0.0;
 
 inline float degreesToRadians(float degrees) {
     return degrees * M_PI / 180.0f;
@@ -19,7 +29,7 @@ inline float degreesToRadians(float degrees) {
 bool teclas[256]; // Array para armazenar o estado das teclas
 
 // Função para carregar uma textura
-GLuint carregarTextura(const char* caminho) {
+GLuint carregarTextura(const char* caminho,const char* repeat) {
     GLuint texturaID;
     int largura, altura, canais;
     unsigned char* imagem = SOIL_load_image(caminho, &largura, &altura, &canais, SOIL_LOAD_AUTO);
@@ -31,9 +41,14 @@ GLuint carregarTextura(const char* caminho) {
 
     glGenTextures(1, &texturaID);
     glBindTexture(GL_TEXTURE_2D, texturaID);
-    
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // Repetição no eixo S
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT); // Repetição no eixo T
+
+    if(repeat == "repetir"){
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // Repetição no eixo S
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT); // Repetição no eixo T
+    }else{
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP); // Sem repetição no eixo S
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+    }
 
     // Configura o filtro de textura (opcional, mas recomendado)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -45,29 +60,6 @@ GLuint carregarTextura(const char* caminho) {
     SOIL_free_image_data(imagem);
     return texturaID;
 }
-//Desenhar Arvore
-void desenharArvore(){
-    glPushMatrix();
-    
-    glBegin(GL_QUADS);
-
-    // Face frontal (plano XY)
-    glTexCoord2f(0.0, 0.0); glVertex3f(-1.0, 0.0,  0.0);
-    glTexCoord2f(1.0, 0.0); glVertex3f(1.0, 0.0,  0.0);
-    glTexCoord2f(1.0, 1.0); glVertex3f(1.0, 1.0,  0.0);
-    glTexCoord2f(0.0, 1.0); glVertex3f(-1.0, 1.0,  0.0);
-
-    // Face lateral (plano ZY)
-    glTexCoord2f(0.0, 0.0); glVertex3f(0.0, 0.0, -1.0);
-    glTexCoord2f(1.0, 0.0); glVertex3f(0.0, 0.0,  1.0);
-    glTexCoord2f(1.0, 1.0); glVertex3f(0.0, 1.0,  1.0);
-    glTexCoord2f(0.0, 1.0); glVertex3f(0.0, 1.0, -1.0);
-
-    glEnd();
-
-    glPopMatrix();
-}
-
 // Função para desenhar o tanque
 void desenharCubo() {
     // Corpo do tanque
@@ -114,49 +106,19 @@ void desenharCubo() {
     glEnd();
     glPopMatrix();
 }
-void desenharSolo() {
-    // Corpo do tanque
-    glPushMatrix(); 
+void desenharSolo(int i, int j) {
+    glPushMatrix();
 
     glBegin(GL_QUADS);
-
-    // Face frontal
-    glTexCoord2f(0.0, 0.0); glVertex3f(-0.5, -0.5,  0.5);
-    glTexCoord2f(400.0, 0.0); glVertex3f( 0.5, -0.5,  0.5);
-    glTexCoord2f(400.0, 400.0); glVertex3f( 0.5,  0.5,  0.5);
-    glTexCoord2f(0.0, 400.0); glVertex3f(-0.5,  0.5,  0.5);
-
-    // Face traseira
-    glTexCoord2f(0.0, 0.0); glVertex3f(-0.5, -0.5, -0.5);
-    glTexCoord2f(400.0, 0.0); glVertex3f( 0.5, -0.5, -0.5);
-    glTexCoord2f(400.0, 400.0); glVertex3f( 0.5,  0.5, -0.5);
-    glTexCoord2f(0.0, 400.0); glVertex3f(-0.5,  0.5, -0.5);
-
-    // Face esquerda
-    glTexCoord2f(0.0, 0.0); glVertex3f(-0.5, -0.5, -0.5);
-    glTexCoord2f(400.0, 0.0); glVertex3f(-0.5, -0.5,  0.5);
-    glTexCoord2f(400.0, 400.0); glVertex3f(-0.5,  0.5,  0.5);
-    glTexCoord2f(0.0, 400.0); glVertex3f(-0.5,  0.5, -0.5);
-
-    // Face direita
-    glTexCoord2f(0.0, 0.0); glVertex3f( 0.5, -0.5, -0.5);
-    glTexCoord2f(400.0, 0.0); glVertex3f( 0.5, -0.5,  0.5);
-    glTexCoord2f(400.0, 400.0); glVertex3f( 0.5,  0.5,  0.5);
-    glTexCoord2f(0.0, 400.0); glVertex3f( 0.5,  0.5, -0.5);
-
-    // Face superior
-    glTexCoord2f(0.0, 0.0); glVertex3f(-0.5,  0.5, -0.5);
-    glTexCoord2f(400.0, 0.0); glVertex3f( 0.5,  0.5, -0.5);
-    glTexCoord2f(400.0, 400.0); glVertex3f( 0.5,  0.5,  0.5);
-    glTexCoord2f(0.0, 400.0); glVertex3f(-0.5,  0.5,  0.5);
-
-    // Face inferior
-    glTexCoord2f(0.0, 0.0); glVertex3f(-0.5, -0.5, -0.5);
-    glTexCoord2f(400.0, 0.0); glVertex3f( 0.5, -0.5, -0.5);
-    glTexCoord2f(400.0, 400.0); glVertex3f( 0.5, -0.5,  0.5);
-    glTexCoord2f(0.0, 400.0); glVertex3f(-0.5, -0.5,  0.5);
+    
+    // Face do solo
+    glTexCoord2f(0.0, 1.0); glVertex3f(10*i, altura[i][j], 10*j);           // Vértice inferior esquerdo
+    glTexCoord2f(1.0, 1.0); glVertex3f(10*i+10, altura[i+1][j], 10*j);      // Vértice inferior direito
+    glTexCoord2f(1.0, 0.0); glVertex3f(10*i+10, altura[i+1][j+1], 10*j+10); // Vértice superior direito
+    glTexCoord2f(0.0, 0.0); glVertex3f(10*i, altura[i][j+1], 10*j+10);      // Vértice superior esquerdo
 
     glEnd();
+
     glPopMatrix();
 }
 void DesenharRoda() {
@@ -329,27 +291,26 @@ void exibir() {
     float cameraDistancia = 15.0; // Distância da câmera ao tanque
     // Calcular a posição da câmera com base nos ângulos AngTorreX e AngTorreY
     GLfloat anguloTotal = AngTorreY + anguloTanque;
+    posicaoTanqueY=altura[static_cast<int>(posicaoTanqueX)/10][static_cast<int>(posicaoTanqueZ)/10]+2.5;
 
-    GLfloat cameraX = posicaoTanqueX - cameraDistancia * std::sin(degreesToRadians(anguloTotal)) * std::cos(degreesToRadians(AngTorreX));
-    GLfloat cameraY = 2.0 + cameraDistancia * std::sin(degreesToRadians(AngTorreX));  // Ajuste a altura da câmera
+    GLfloat cameraX = posicaoTanqueX - cameraDistancia* std::sin(degreesToRadians(anguloTotal)) * std::cos(degreesToRadians(AngTorreX));
+    GLfloat cameraY = posicaoTanqueY+3.0 + cameraDistancia * std::sin(degreesToRadians(AngTorreX));  // Ajuste a altura da câmera
     GLfloat cameraZ = posicaoTanqueZ - cameraDistancia * std::cos(degreesToRadians(anguloTotal)) * std::cos(degreesToRadians(AngTorreX));
 
     // A câmera olha na direção em que o canhão está apontando
-    GLfloat focoX = posicaoTanqueX + std::cos(degreesToRadians(AngTorreY)) * std::cos(degreesToRadians(AngTorreX));
-    GLfloat focoY = 2.0 + std::sin(degreesToRadians(AngTorreX));  // Ponto de foco no canhão
+    GLfloat focoX = posicaoTanqueX;
+    GLfloat focoY = posicaoTanqueY+2.0 + std::sin(degreesToRadians(AngTorreX));  // Ponto de foco no canhão
     GLfloat focoZ = posicaoTanqueZ + std::sin(degreesToRadians(AngTorreY)) * std::cos(degreesToRadians(AngTorreX));
 
     // Definir a câmera usando gluLookAt
     gluLookAt(cameraX, cameraY, cameraZ,   // Posição da câmera
               focoX, focoY, focoZ,         // Ponto de foco
               0.0, 1.0, 0.0);             // Vetor 'up' (cima)
-                                   
-
     //Tanque
     glPushMatrix();
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, texturaTanque);
-    glTranslatef(posicaoTanqueX, 0.0, posicaoTanqueZ); 
+    glTranslatef(posicaoTanqueX, posicaoTanqueY, posicaoTanqueZ); 
     glRotatef(anguloTanque, 0.0, 1.0, 0.0); 
     DesenharTanque();
     glDisable(GL_TEXTURE_2D);
@@ -358,20 +319,13 @@ void exibir() {
     glPushMatrix();
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D,texturaGrama);
-    glTranslatef(0.0,-2.5,0.0);
-    glScalef(5000.0,0.5,5000.0);
-    desenharSolo();
+    for (int i=0;i<9;i++){
+        for (int j=0;j<9;j++){
+            desenharSolo(i,j);
+        }
+    }
     glDisable(GL_TEXTURE_2D);
     glPopMatrix();
-
-    /*glPushMatrix();
-    glEnable(GL_TEXTURE_2D);
-    glScalef(5.0,10.0,5.0);
-    glBindTexture(GL_TEXTURE_2D,texturaArvore);
-    desenharArvore();
-    glDisable(GL_TEXTURE_2D);
-    glPopMatrix();*/
-
     glutSwapBuffers();
 }
 
@@ -408,9 +362,8 @@ void configurarIluminacao() {
 void inicializar() {
     glEnable(GL_DEPTH_TEST);
     configurarIluminacao();
-    texturaTanque = carregarTextura("militar.jpeg");
-    texturaGrama = carregarTextura("grama.jpeg");
-    texturaArvore = carregarTextura("arvore.jpeg");
+    texturaTanque = carregarTextura("militar.jpeg", "repetir");
+    texturaGrama = carregarTextura("grama.jpeg","repetir");
 }
 
 // Função para processamento de teclas
@@ -472,7 +425,6 @@ void atualizar(int valor) {
     if (teclas['d']) {
         anguloTanque -= 5.0;
     }
-
     glutPostRedisplay();
     glutTimerFunc(16, atualizar, 0); // Aproximadamente 60 FPS
 }
