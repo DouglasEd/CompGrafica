@@ -6,19 +6,49 @@
 
 float anguloTanque = 0.0;
 float AngTorreY = 0.0,AngTorreX = 0.0;
-int altura[10][10] = {
-        {0, 0, 0, 0, 0, 3, 5, 5, 5, 5},
-        {0, 1, 0, 0, 0, 3, 5, 6, 6, 6},
-        {0, 0, 0, 0, 0, 3, 5, 6, 7, 6},
-        {0, 0, 0, 0, 0, 3, 5, 6, 6, 6},
-        {0, 0, 0, 0, 0, 0, 3, 5, 6, 5},
-        {0, 0, 0, 0, 0, 5, 3, 5, 6, 5},
-        {0, 0, 0, 2, 4, 0, 0, 3, 4, 3},
-        {0, 0, 0, 3, 0, 0, 0, 0, 3, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+int altura[40][40] = {
+        {0, 0, 0, 0, 0, 3, 5, 5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 1, 0, 0, 0, 3, 5, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 3, 5, 6, 7, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 3, 5, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 3, 5, 6, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 5, 3, 5, 6, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 2, 4, 0, 0, 3, 4, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 3, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 3, 4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3, 3, 3, 3, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3, 4, 4, 4, 4, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3, 4, 6, 6, 6, 4, 2, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 4, 6, 7, 7, 6, 4, 2, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 4, 6, 7, 7, 6, 4, 2, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 4, 5, 7, 7, 6, 4, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 4, 5, 5, 6, 6, 5, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 4, 3, 5, 5, 5, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 4, 3, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 3, 5, 5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 1, 0, 0, 0, 3, 5, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 3, 5, 6, 7, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 3, 5, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 3, 5, 6, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 5, 3, 5, 6, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 2, 4, 0, 0, 3, 4, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 3, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 3, 4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3, 3, 3, 3, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3, 4, 4, 4, 4, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3, 4, 6, 6, 6, 4, 2, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 4, 6, 7, 7, 6, 4, 2, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 4, 6, 7, 7, 6, 4, 2, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 4, 5, 7, 7, 6, 4, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 4, 5, 5, 6, 6, 5, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 4, 3, 5, 5, 5, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 4, 3, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     };
-float posicaoTanqueX = 50.0,posicaoTanqueY = 2.5, posicaoTanqueZ = 50.0; 
+float posicaoTanqueX = 100.0,posicaoTanqueY = 2.5, posicaoTanqueZ = 100.0; 
 GLuint texturaTanque, texturaGrama; 
 float anguloCameraX = 0.0, anguloCameraY =0.0;
 
@@ -154,7 +184,6 @@ void DesenharRoda() {
     gluDeleteQuadric(quadric); // Libere o objeto quadric
 }
 
-
 void desenharCilindro() {
     GLUquadricObj* quadric;
 
@@ -277,6 +306,26 @@ void DesenharTanque() {
     DesenharRodas();
     glPopMatrix();
 }
+float calcularAlturaSuavizada(float x, float z) {
+    // Converte as coordenadas do tanque para a grade da matriz
+    int xBase = static_cast<int>(x) / 10;
+    int zBase = static_cast<int>(z) / 10;
+    
+    // Obter os fatores fracionais de x e z
+    float xFrac = (x / 10) - xBase;
+    float zFrac = (z / 10) - zBase;
+
+    // Pegar as alturas nos quatro pontos ao redor
+    float h00 = altura[xBase][zBase];         // Canto inferior esquerdo
+    float h10 = altura[xBase + 1][zBase];     // Canto inferior direito
+    float h01 = altura[xBase][zBase + 1];     // Canto superior esquerdo
+    float h11 = altura[xBase + 1][zBase + 1]; // Canto superior direito
+
+    // Interpolação bilinear
+    float h0 = h00 * (1 - xFrac) + h10 * xFrac; // Interpola na direção X
+    float h1 = h01 * (1 - xFrac) + h11 * xFrac; // Interpola na direção X
+    return h0 * (1 - zFrac) + h1 * zFrac;       // Interpola na direção Z
+}
 
 // Função de exibição
 void exibir() {
@@ -291,7 +340,7 @@ void exibir() {
     float cameraDistancia = 15.0; // Distância da câmera ao tanque
     // Calcular a posição da câmera com base nos ângulos AngTorreX e AngTorreY
     GLfloat anguloTotal = AngTorreY + anguloTanque;
-    posicaoTanqueY=altura[static_cast<int>(posicaoTanqueX)/10][static_cast<int>(posicaoTanqueZ)/10]+2.5;
+    posicaoTanqueY=calcularAlturaSuavizada(posicaoTanqueX,posicaoTanqueZ)+2.5;
 
     GLfloat cameraX = posicaoTanqueX - cameraDistancia* std::sin(degreesToRadians(anguloTotal)) * std::cos(degreesToRadians(AngTorreX));
     GLfloat cameraY = posicaoTanqueY+3.0 + cameraDistancia * std::sin(degreesToRadians(AngTorreX));  // Ajuste a altura da câmera
@@ -310,6 +359,7 @@ void exibir() {
     glPushMatrix();
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, texturaTanque);
+    glRotatef(0.0,0.0,0.0,1.0);
     glTranslatef(posicaoTanqueX, posicaoTanqueY, posicaoTanqueZ); 
     glRotatef(anguloTanque, 0.0, 1.0, 0.0); 
     DesenharTanque();
@@ -319,8 +369,8 @@ void exibir() {
     glPushMatrix();
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D,texturaGrama);
-    for (int i=0;i<9;i++){
-        for (int j=0;j<9;j++){
+    for (int i=0;i<40;i++){
+        for (int j=0;j<40;j++){
             desenharSolo(i,j);
         }
     }
@@ -410,12 +460,24 @@ void atualizar(int valor) {
 
     // Movimentação com as teclas 'w' e 's'
     if (teclas['w']) {
-        posicaoTanqueX += dx;
-        posicaoTanqueZ += dz;
+        if(posicaoTanqueX>2.5&&posicaoTanqueX<397.5&&posicaoTanqueZ>2.5&&posicaoTanqueZ<397.5){
+            posicaoTanqueX += dx;
+            posicaoTanqueZ += dz;
+        }
+        if(posicaoTanqueX<2.5||posicaoTanqueX>397.5||posicaoTanqueZ<2.5||posicaoTanqueZ>397.5){
+            posicaoTanqueX -= dx;
+            posicaoTanqueZ -= dz;
+        }
     }
     if (teclas['s']) {
-        posicaoTanqueX -= dx;
-        posicaoTanqueZ -= dz;
+        if(posicaoTanqueX>2.5&&posicaoTanqueX<397.5&&posicaoTanqueZ>2.5&&posicaoTanqueZ<397.5){
+            posicaoTanqueX -= dx;
+            posicaoTanqueZ -= dz;
+        }
+        if(posicaoTanqueX<2.5||posicaoTanqueX>397.5||posicaoTanqueZ<2.5||posicaoTanqueZ>397.5){
+            posicaoTanqueX += dx;
+            posicaoTanqueZ += dz;
+        }
     }
 
     // Rotação com as teclas 'a' e 'd'
